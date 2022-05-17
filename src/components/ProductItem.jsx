@@ -1,5 +1,5 @@
 import { Card, Button } from 'react-bootstrap';
-const ProductItem = ({ product }) => (
+const ProductItem = ({ product, addItemToCart }) => (
     <Card style={{ width: '18rem' }}>
         <Card.Img variant="top" src={product.image} />
         <Card.Body>
@@ -7,7 +7,7 @@ const ProductItem = ({ product }) => (
             <Card.Text>
                 {product.description}
             </Card.Text>
-            <Button variant="primary">Lägg i varukorg</Button>
+            <Button variant="primary" onClick={() => addItemToCart(product)}>Lägg i varukorg</Button>
         </Card.Body>
     </Card>
 )

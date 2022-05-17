@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import ProductItem from './ProductItem';
 import { Container, Row, Col } from 'react-bootstrap';
-const ProductList = () => {
+const ProductList = ({addItemToCart}) => {
 
     const [products, setProducts] = useState([]);
 
@@ -14,7 +14,7 @@ const ProductList = () => {
     return (
         <Container>
             <Row>
-                {products.map(product => <Col><ProductItem product={product} /></Col>)}
+                {products.map(product => <Col key={product.id}><ProductItem product={product} addItemToCart={addItemToCart} /></Col>)}
             </Row>
         </Container>
     )
