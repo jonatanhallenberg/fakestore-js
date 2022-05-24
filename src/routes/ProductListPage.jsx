@@ -1,10 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import ProductList from '../components/ProductList';
+import CategoryProductList from '../components/CategoryProductList';
 import Cart from '../components/Cart';
 import { useState } from 'react';
 
-const StartPage = () => {
+const ProductListPage = ({ pageType }) => {
   const [cartItems, setCartItems] = useState([]);
 
   const addItemToCart = (product) => {
@@ -30,23 +31,16 @@ const StartPage = () => {
   }
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <h1>Fakestore</h1>
-        </Col>
-      </Row>
       <Row>
         <Col md={9}>
           <h2>Produkter</h2>
-          <ProductList addItemToCart={addItemToCart} />
+          { pageType === "category" ? <CategoryProductList addItemToCart={addItemToCart} /> : <ProductList addItemToCart={addItemToCart} /> }
         </Col>
         <Col md={3}>
           <Cart cartItems={cartItems} removeCartItem={removeCartItem} />
         </Col>
       </Row>
-    </Container>
   )
 }
 
-export default StartPage;
+export default ProductListPage;
