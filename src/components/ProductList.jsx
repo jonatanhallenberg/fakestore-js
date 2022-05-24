@@ -1,29 +1,39 @@
 import { useState, useEffect } from 'react';
 import ProductItem from './ProductItem';
-import { Container, Row, Col, Form } from 'react-bootstrap';
+import { Container, Row, Col, Form, InputGroup, Button } from 'react-bootstrap';
 const ProductList = ({ addItemToCart }) => {
 
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [searchText, setSearchText] = useState("");
+    const [productsUrl, setProductsUrl] = useState("https://fakestore-iths-api.herokuapp.com/products");
 
+    const onFormSubmit = (event) => {
+        event.preventDefault();
+        setProductsUrl(`https://fakestore-iths-api.herokuapp.com/products?query=${searchText}`);
+    }
 
     useEffect(() => {
         setIsLoading(true);
-        fetch(`https://fakestore-iths-api.herokuapp.com/products?query=${searchText}`)
+        fetch(productsUrl)
             .then(res => res.json())
             .then(json => {
                 setIsLoading(false)
                 setProducts(json)
             }
             )
-    }, [searchText]);
+    }, [productsUrl]);
 
     return (
         <Container>
             <Row>
                 <Col>
-                    <Form.Control type="text" onChange={event => setSearchText(event.target.value)}></Form.Control>
+                    <Form onSubmit={onFormSubmit}>
+                        <InputGroup>
+                            <Form.Control type="text" onChange={event => setSearchText(event.target.value)}></Form.Control>
+                            <Button type="submit">Sök</Button>
+                        </InputGroup>
+                    </Form>
                 </Col>
             </Row>
             <Row>
